@@ -12,8 +12,7 @@ const app = express();
 app.use(express.json({ limit: '50mb' }));
 app.use(cors({
   origin: [
-    "https://wedding-plan-beta.vercel.app",
-    "https://wedding-plan.vercel.app",
+    "https://yes-i-do-eta.vercel.app/",
     "http://localhost:3000"
   ],
   methods: "GET,POST,PUT,DELETE",

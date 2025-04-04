@@ -10,7 +10,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
-  const API_BASE_URL = "https://ido-cvwh.onrender.com";
+  const API_BASE_URL = "https://yesido.onrender.com";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
