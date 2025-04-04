@@ -25,14 +25,28 @@ export default function Admin() {
           withCredentials: true
         });
         
-        const formattedMemories = res.data.map(memory => ({
+        // Process the memories to handle both base64 and file path formats
+        const processedMemories = res.data.map(memory => ({
           ...memory,
-          images: memory.images.map(img => 
-            `data:${img.contentType};base64,${img.data}`
-          )
+          images: memory.images.map(img => {
+            // Check if the data is a base64 string or a file path
+            if (img.data.startsWith('data:') || img.data.startsWith('/9j/') || img.data.startsWith('iVBOR')) {
+              // It's already a base64 string or starts with base64 indicators
+              return {
+                ...img,
+                displayUrl: img.data.startsWith('data:') ? img.data : `data:${img.contentType};base64,${img.data}`
+              };
+            } else {
+              // It's a file path
+              return {
+                ...img,
+                displayUrl: `${API_BASE_URL}${img.data}`
+              };
+            }
+          })
         }));
         
-        setMemories(formattedMemories);
+        setMemories(processedMemories);
       } catch (error) {
         console.error("Fetch error:", error);
         navigate("/login");
@@ -46,36 +60,50 @@ export default function Admin() {
     return () => clearInterval(interval);
   }, [navigate]);
 
-  const handleDownload = (base64Data) => {
+  const handleDownload = (image) => {
     try {
-      const [header, data] = base64Data.split(',');
-      const contentType = header.split(':')[1].split(';')[0];
-      const filename = `memory-${Date.now()}.${contentType.split('/')[1]}`;
+      // Create a link element
+      const link = document.createElement('a');
       
-      const byteCharacters = atob(data);
-      const byteArrays = [];
-      
-      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-        const slice = byteCharacters.slice(offset, offset + 512);
-        const byteNumbers = new Array(slice.length);
+      // Check if the image is a base64 string or a file path
+      if (image.data.startsWith('data:') || image.data.startsWith('/9j/') || image.data.startsWith('iVBOR')) {
+        // It's a base64 string
+        const base64Data = image.data.startsWith('data:') ? image.data : `data:${image.contentType};base64,${image.data}`;
+        const [header, data] = base64Data.split(',');
+        const contentType = header.split(':')[1].split(';')[0];
+        const filename = `memory-${Date.now()}.${contentType.split('/')[1]}`;
         
-        for (let i = 0; i < slice.length; i++) {
-          byteNumbers[i] = slice.charCodeAt(i);
+        const byteCharacters = atob(data);
+        const byteArrays = [];
+        
+        for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+          const slice = byteCharacters.slice(offset, offset + 512);
+          const byteNumbers = new Array(slice.length);
+          
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+          
+          byteArrays.push(new Uint8Array(byteNumbers));
         }
         
-        byteArrays.push(new Uint8Array(byteNumbers));
+        const blob = new Blob(byteArrays, { type: contentType });
+        const url = window.URL.createObjectURL(blob);
+        
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(link);
+      } else {
+        // It's a file path
+        link.href = `${API_BASE_URL}${image.data}`;
+        link.download = `memory-${Date.now()}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
-      
-      const blob = new Blob(byteArrays, { type: contentType });
-      const url = window.URL.createObjectURL(blob);
-      
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
     } catch (error) {
       console.error("Download error:", error);
       alert('Error downloading image. Please try again.');
@@ -111,7 +139,7 @@ export default function Admin() {
             <div key={`${memory._id}-${index}`} className={`memory-card color-${index % 3}`}>
               <div className="image-container" onClick={() => handleImageClick(image)}>
               <img 
-                src={image} 
+                src={image.displayUrl} 
                 alt={`Memory ${index + 1}`} 
                 className="memory-image" 
                 onClick={() => handleImageClick(image)}
@@ -146,7 +174,7 @@ export default function Admin() {
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closeModal}>✖</button>
-            <img src={selectedImage} alt="Selected Memory" className="modal-image" />
+            <img src={selectedImage.displayUrl} alt="Selected Memory" className="modal-image" />
           </div>
         </div>
       )}
