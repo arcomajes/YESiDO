@@ -4,9 +4,18 @@ const multer = require("multer");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+  console.log("✅ Uploads directory created");
+}
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
@@ -40,10 +49,12 @@ app.use('/uploads', express.static('uploads'));
 // Multer disk storage configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+    // Create a unique filename with timestamp and original name
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
   }
 });
 
@@ -96,10 +107,22 @@ const authMiddleware = (req, res, next) => {
 // Routes
 app.post("/upload", upload.array("images", 10), async (req, res) => {
   try {
-    const images = req.files.map(file => ({
-      data: `/uploads/${file.filename}`,
-      contentType: file.mimetype
-    }));
+    console.log("Upload request received");
+    
+    if (!req.files || req.files.length === 0) {
+      console.error("No files uploaded");
+      return res.status(400).json({ message: "No files uploaded" });
+    }
+    
+    console.log(`Processing ${req.files.length} files`);
+    
+    const images = req.files.map(file => {
+      console.log(`File processed: ${file.filename}, size: ${file.size} bytes`);
+      return {
+        data: `/uploads/${file.filename}`,
+        contentType: file.mimetype
+      };
+    });
 
     const newMemory = new Memory({
       name: req.body.name || "Anonymous",
@@ -108,10 +131,15 @@ app.post("/upload", upload.array("images", 10), async (req, res) => {
     });
 
     await newMemory.save();
+    console.log("Memory saved successfully");
     res.status(201).json({ message: "Memory saved!" });
   } catch (error) {
     console.error("Upload error:", error);
-    res.status(500).json({ message: "Upload failed" });
+    res.status(500).json({ 
+      message: "Upload failed", 
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 
