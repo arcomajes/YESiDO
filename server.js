@@ -10,20 +10,45 @@ const app = express();
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
+
+// CORS configuration
+const allowedOrigins = [
+  "https://yes-i-do-eta.vercel.app",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: [
-    "https://yes-i-do-eta.vercel.app",
-    "http://localhost:3000"
-  ],
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
-  credentials: true
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+  maxAge: 86400 // 24 hours
 }));
 
-// Multer memory storage configuration
-const storage = multer.memoryStorage();
+// Serve static files from uploads directory
+app.use('/uploads', express.static('uploads'));
+
+// Multer disk storage configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
 const upload = multer({
-  storage,
+  storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
 
@@ -72,7 +97,7 @@ const authMiddleware = (req, res, next) => {
 app.post("/upload", upload.array("images", 10), async (req, res) => {
   try {
     const images = req.files.map(file => ({
-      data: file.buffer.toString('base64'),
+      data: `/uploads/${file.filename}`,
       contentType: file.mimetype
     }));
 
