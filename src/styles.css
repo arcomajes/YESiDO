@@ -5,6 +5,12 @@
     padding: 20px;
   }
   
+  /* Cursive font for wedding text */
+  .font-cursive {
+    font-family: 'Baguet Script', 'Dancing Script', 'Great Vibes', 'Brush Script MT', cursive;
+    letter-spacing: 1px;
+  }
+  
   /* Header styles */
   .header {
     display: flex;
@@ -117,7 +123,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 16px;
+    margin-top: 5px;
   }
   
   .indicator-dots {
@@ -196,7 +202,7 @@
 
   body {
     font-family: 'Arial, sans-serif';
-    background-color: hwb(7 89% 8%); /* Red background */
+    background-color: linear-gradient(135deg, rgba(254, 202, 202, 0.3), rgba(254, 226, 226, 0.5));
     text-align: center;
     margin: 0;
     padding: 0;
@@ -205,25 +211,7 @@
 /* Load Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Open+Sans:wght@400;500&display=swap');
 
-.sticky-nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px); /* Glass effect */
-  border-bottom: 1px solid #fecaca;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
 
-.nav-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .couple-name {
   font-family: 'Playfair Display', serif;
@@ -268,7 +256,7 @@
 /* ===== Overview Section ===== */
 #overview {
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 0rem;
 }
 
 .overview-hero {
@@ -383,7 +371,7 @@
 }
 
 .card {
-  background: white;
+  background: #fecaca;
   border: 1px solid #fecaca;
   border-radius: 0.75rem;
   overflow: hidden;
@@ -697,13 +685,13 @@ nav {
   /* photos and rsvp */
   /* ===== Photos Section ===== */
 #photos {
-  margin-bottom: 4rem;
+  margin-bottom: 0;
 }
 
 #photos .section-header {
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
 #photos h2 {
@@ -721,203 +709,13 @@ nav {
 }
 
 .photo-upload-card {
-  background: white;
-  border: 1px solid #fecaca;
+  background: linear-gradient(135deg, rgba(254, 202, 202, 0.7), rgba(254, 226, 226, 0.8));
+  background-size: cover;
+  background-position: center;
   border-radius: 0.75rem;
-  padding: 2rem;
+  padding: 1rem 2rem;
   box-shadow: 0 4px 12px rgba(127, 29, 29, 0.08);
-}
-
-.hashtag-display {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.75rem;
-  color: #7f1d1d;
-  margin: 2rem 0;
-  letter-spacing: 0.5px;
-}
-
-.upload-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background: white;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.upload-form h2 {
-  font-family: 'Playfair Display', serif;
-  color: #7f1d1d;
-  margin-bottom: 1.5rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  font-family: 'Open Sans', sans-serif;
-  color: #7f1d1d;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-.form-control {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #fecaca;
-  border-radius: 0.375rem;
-  font-family: 'Open Sans', sans-serif;
-  transition: border-color 0.3s;
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: #7f1d1d;
-}
-
-.image-preview-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.image-preview {
-  width: 4rem;
-  height: 4rem;
-  object-fit: cover;
-  border-radius: 0.25rem;
-  border: 1px solid #fecaca;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #7f1d1d;
-  color: white;
-  border: none;
-  border-radius: 0.375rem;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submit-btn:hover {
-  background-color: #991b1b;
-}
-
-/* ===== RSVP Section ===== */
-#rsvp {
-  margin-bottom: 4rem;
-}
-
-#rsvp .section-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-#rsvp h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: #7f1d1d;
-  margin-right: 1rem;
-  white-space: nowrap;
-}
-
-#rsvp .divider {
-  flex-grow: 1;
-  height: 1px;
-  background-color: #fecaca;
-}
-
-.rsvp-card {
-  background: white;
-  border: 1px solid #fecaca;
-  border-radius: 0.75rem;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(127, 29, 29, 0.08);
-}
-
-.rsvp-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.rsvp-header h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.75rem;
-  color: #7f1d1d;
-  margin-bottom: 0.5rem;
-}
-
-.rsvp-header p {
-  font-family: 'Open Sans', sans-serif;
-  color: #6b7280;
-}
-
-/* File Input Styling */
-.file-input-container {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
-.file-input-label {
-  display: block;
-  padding: 0.75rem;
-  border: 1px dashed #fecaca;
-  border-radius: 0.375rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.file-input-label:hover {
-  background-color: #fef2f2;
-  border-color: #7f1d1d;
-}
-
-.file-input {
-  position: absolute;
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  z-index: -1;
-}/* ===== Photos Section ===== */
-#photos {
-  margin-bottom: 4rem;
-}
-
-#photos .section-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-#photos h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: #7f1d1d;
-  margin-right: 1rem;
-  white-space: nowrap;
-}
-
-#photos .divider {
-  flex-grow: 1;
-  height: 1px;
-  background-color: #fecaca;
-}
-
-.photo-upload-card {
-  background: white;
-  border: 1px solid #fecaca;
-  border-radius: 0.75rem;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(127, 29, 29, 0.08);
+  margin: 0;
 }
 
 .hashtag-display {
@@ -1085,7 +883,6 @@ nav {
 /* ===== Wedding Footer ===== */
 footer {
   background-color: rgba(255, 255, 255, 0.9);
-  border-top: 1px solid #fecaca;
   padding: 3rem 1rem;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -1220,4 +1017,15 @@ input, select, textarea {
   .form-control {
     font-size: 16px; /* Prevent mobile zoom */
   }
+}
+
+/* Map Container Styles */
+.map-container {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
