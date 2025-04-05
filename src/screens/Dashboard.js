@@ -224,7 +224,7 @@ export default function Dashboard() {
       )}
       
       {/* Main Content */}
-      <div className="p-6 md:p-10 overflow-auto w-full" style={{ position: 'relative', zIndex: 1 }}>
+      <div className="p-6 md:p-15 overflow-auto w-full" style={{ position: 'relative', zIndex: 1 }}>
         <div className="max-w-5xl mx-auto">
           
           {/* Hero Section */}
@@ -239,9 +239,9 @@ export default function Dashboard() {
                 <div className="hero-content">
                   <h1>Join Our Greatest Adventure</h1>        
                   <p className="text-5xl font-semibold mt-2 typing-effect" style={{ 
-                    fontSize: '4.5rem', 
+                    fontSize: '3.5rem', 
                     marginBottom: '1rem',
-                    minHeight: '5rem',
+                    minHeight: '4rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -251,10 +251,10 @@ export default function Dashboard() {
                     {typedText}
                     {isTyping && <span className="cursor" style={{ 
                       display: 'inline-block', 
-                      width: '4px', 
-                      height: '3.5rem', 
+                      width: '3px', 
+                      height: '2.5rem', 
                       backgroundColor: 'white', 
-                      marginLeft: '3px',
+                      marginLeft: '2px',
                       animation: 'blink 1s infinite'
                     }}></span>}
                   </p>
@@ -283,7 +283,7 @@ export default function Dashboard() {
                       {validationError}
                     </div>
                   )}
-                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
                     <label style={{ marginBottom: '5px' }}>Name:</label>
                     <input 
                       type="text" 
@@ -291,10 +291,10 @@ export default function Dashboard() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Leave blank for Anonymous"
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', boxSizing: 'border-box' }}
                     />
                   </div>
-                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
                     <label style={{ marginBottom: '5px' }}>Message/wishes:</label>
                     <textarea 
                       className="form-control" 
@@ -302,10 +302,10 @@ export default function Dashboard() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Leave blank if no message"
-                      style={{ width: '100%' }}
+                      style={{ width: '100%', boxSizing: 'border-box' }}
                     ></textarea>
                   </div>
-                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <div className="form-group" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
                     <label style={{ marginBottom: '5px' }}>Upload Images: <span style={{ color: 'red' }}>*</span></label>
                     <div className="file-input-container" style={{ width: '100%' }}>
                       <label className="file-input-label">
