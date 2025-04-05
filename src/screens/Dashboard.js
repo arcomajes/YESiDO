@@ -163,7 +163,7 @@ export default function Dashboard() {
       name2: "Estrel",
     },
     date: "April 6, 2025",
-    day: "Saturday",
+    day: "Sunday",
     time: "2:30 PM",
     ceremonyLocation: "Looc, Oslob, Cebu",
     ceremonyAddress: "Looc, Oslob, Cebu",
@@ -239,9 +239,9 @@ export default function Dashboard() {
                 <div className="hero-content">
                   <h1>Join Our Greatest Adventure</h1>        
                   <p className="text-5xl font-semibold mt-2 typing-effect" style={{ 
-                    fontSize: '3.5rem', 
+                    fontSize: '2.8rem', 
                     marginBottom: '1rem',
-                    minHeight: '4rem',
+                    minHeight: '3.5rem',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -251,8 +251,8 @@ export default function Dashboard() {
                     {typedText}
                     {isTyping && <span className="cursor" style={{ 
                       display: 'inline-block', 
-                      width: '3px', 
-                      height: '2.5rem', 
+                      width: '2px', 
+                      height: '2rem', 
                       backgroundColor: 'white', 
                       marginLeft: '2px',
                       animation: 'blink 1s infinite'
