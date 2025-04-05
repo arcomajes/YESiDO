@@ -1012,10 +1012,62 @@ input, select, textarea {
 @media (max-width: 768px) {
   .upload-form {
     padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .form-control {
     font-size: 16px; /* Prevent mobile zoom */
+    padding: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  
+  .file-input-container {
+    width: 100%;
+  }
+  
+  .file-input-label {
+    padding: 0.75rem;
+    font-size: 14px;
+  }
+  
+  .image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+  
+  .image-preview {
+    height: 80px;
+  }
+  
+  .submit-btn {
+    padding: 0.5rem;
+    font-size: 14px;
+  }
+}
+
+/* Additional mobile optimizations for very small screens */
+@media (max-width: 480px) {
+  .upload-form {
+    padding: 0.75rem;
+  }
+  
+  .form-control {
+    padding: 0.4rem;
+  }
+  
+  .image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  }
+  
+  .image-preview {
+    height: 70px;
   }
 }
 
